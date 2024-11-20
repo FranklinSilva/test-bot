@@ -22,6 +22,9 @@ client.on("ready", () => {
 });
 
 /*
+
+
+
     Estrutura do bot
     [] Gatilho com mensagem padrão
     [] Falar 2 tipos de serviços e um terceiro customizado
