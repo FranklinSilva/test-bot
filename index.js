@@ -149,5 +149,4 @@ client.on("message", async (message) => {
     );
   }
 });
-//at the end
 client.initialize();
