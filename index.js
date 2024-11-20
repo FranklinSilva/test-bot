@@ -1,18 +1,33 @@
 const qrcode = require("qrcode-terminal");
 
 const { Client } = require("whatsapp-web.js");
-const client = new Client();
+
+let sessionLocal = JSON.parse(process.env.WW_SESSION);
+console.log(sessionLocal);
+
+const puppeteerOptions = {
+  headless: true,
+  args: ["--no-sandbox"],
+};
+
+const client = new Client({
+  puppeteer: puppeteerOptions,
+  // session: sessionLocal
+});
 
 client.on("qr", (qr) => {
   qrcode.generate(qr, { small: true });
   console.log(qr);
 });
 
+client.on("authenticated", (session) => {
+  // Save this session object in WW_SESSION manually to reuse it next time
+  console.log(JSON.stringify(session));
+});
+
 client.on("ready", () => {
   console.log("Whatsapp conectado!");
 });
-
-client.initialize();
 
 /*
     Estrutura do bot
@@ -134,3 +149,5 @@ client.on("message", async (message) => {
     );
   }
 });
+
+client.initialize();
